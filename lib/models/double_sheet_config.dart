@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class DoubleSheetConfig {
   final String title;
+  final Widget? titleWidget;
   final double initialChildSize;
   final double minChildSize;
   final double maxChildSize;
@@ -12,9 +13,12 @@ class DoubleSheetConfig {
   final bool isDismissible;
   final bool showDragHandle;
   final bool allowFullScreen;
+  final BorderRadius? borderRadius;
+  final BorderRadius? headerRadius;
 
   const DoubleSheetConfig({
     required this.title,
+    this.titleWidget,
     this.initialChildSize = 0.4,
     this.minChildSize = 0.25,
     this.maxChildSize = 0.9,
@@ -25,10 +29,13 @@ class DoubleSheetConfig {
     this.isDismissible = true,
     this.showDragHandle = true,
     this.allowFullScreen = false,
+    this.borderRadius,
+    this.headerRadius,
   });
 
   DoubleSheetConfig copyWith({
     String? title,
+    Widget? titleWidget,
     double? initialChildSize,
     double? minChildSize,
     double? maxChildSize,
@@ -39,19 +46,25 @@ class DoubleSheetConfig {
     bool? isDismissible,
     bool? showDragHandle,
     bool? allowFullScreen,
+    BorderRadius? borderRadius,
+    BorderRadius? headerRadius,
   }) {
     return DoubleSheetConfig(
       title: title ?? this.title,
+      titleWidget: titleWidget ?? this.titleWidget,
       initialChildSize: initialChildSize ?? this.initialChildSize,
       minChildSize: minChildSize ?? this.minChildSize,
       maxChildSize: maxChildSize ?? this.maxChildSize,
       backgroundColor: backgroundColor ?? this.backgroundColor,
-      headerBackgroundColor: headerBackgroundColor ?? this.headerBackgroundColor,
+      headerBackgroundColor:
+          headerBackgroundColor ?? this.headerBackgroundColor,
       titleStyle: titleStyle ?? this.titleStyle,
       enableDrag: enableDrag ?? this.enableDrag,
       isDismissible: isDismissible ?? this.isDismissible,
       showDragHandle: showDragHandle ?? this.showDragHandle,
       allowFullScreen: allowFullScreen ?? this.allowFullScreen,
+      borderRadius: borderRadius ?? this.borderRadius,
+      headerRadius: headerRadius ?? this.headerRadius,
     );
   }
 

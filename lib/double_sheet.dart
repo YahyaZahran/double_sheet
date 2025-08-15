@@ -10,6 +10,7 @@ Future<T?> showDoubleSheet<T>({
   required BuildContext context,
   required String title,
   required Widget child,
+  Widget? titleWidget,
   double initialChildSize = 0.4,
   double minChildSize = 0.25,
   double maxChildSize = 0.9,
@@ -20,9 +21,12 @@ Future<T?> showDoubleSheet<T>({
   bool isDismissible = true,
   bool showDragHandle = true,
   bool allowFullScreen = false,
+  BorderRadius? borderRadius,
+  BorderRadius? headerRadius,
 }) {
   final config = DoubleSheetConfig(
     title: title,
+    titleWidget: titleWidget,
     initialChildSize: initialChildSize,
     minChildSize: minChildSize,
     maxChildSize: maxChildSize,
@@ -33,12 +37,17 @@ Future<T?> showDoubleSheet<T>({
     isDismissible: isDismissible,
     showDragHandle: showDragHandle,
     allowFullScreen: allowFullScreen,
+    borderRadius: borderRadius,
+    headerRadius: headerRadius,
   );
 
   return showGeneralDialog<T>(
     context: context,
     barrierDismissible: isDismissible,
-    barrierLabel: isDismissible ? MaterialLocalizations.of(context).modalBarrierDismissLabel : null,
+    barrierLabel:
+        isDismissible
+            ? MaterialLocalizations.of(context).modalBarrierDismissLabel
+            : null,
     barrierColor: Colors.black.withValues(alpha: 0.5),
     transitionDuration: const Duration(milliseconds: 300),
     pageBuilder: (dialogContext, animation, secondaryAnimation) {
@@ -64,6 +73,7 @@ Future<T?> showDoubleSheet<T>({
 
 class DoubleSheet extends StatelessWidget {
   final String title;
+  final Widget? titleWidget;
   final double initialChildSize;
   final double minChildSize;
   final double maxChildSize;
@@ -73,12 +83,15 @@ class DoubleSheet extends StatelessWidget {
   final bool enableDrag;
   final bool showDragHandle;
   final bool allowFullScreen;
+  final BorderRadius? borderRadius;
+  final BorderRadius? headerRadius;
   final VoidCallback? onClose;
   final Widget child;
 
   const DoubleSheet({
     super.key,
     required this.title,
+    this.titleWidget,
     this.initialChildSize = 0.4,
     this.minChildSize = 0.25,
     this.maxChildSize = 0.9,
@@ -88,6 +101,8 @@ class DoubleSheet extends StatelessWidget {
     this.enableDrag = true,
     this.showDragHandle = true,
     this.allowFullScreen = false,
+    this.borderRadius,
+    this.headerRadius,
     this.onClose,
     required this.child,
   });
@@ -96,6 +111,7 @@ class DoubleSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     final config = DoubleSheetConfig(
       title: title,
+      titleWidget: titleWidget,
       initialChildSize: initialChildSize,
       minChildSize: minChildSize,
       maxChildSize: maxChildSize,
@@ -105,6 +121,8 @@ class DoubleSheet extends StatelessWidget {
       enableDrag: enableDrag,
       showDragHandle: showDragHandle,
       allowFullScreen: allowFullScreen,
+      borderRadius: borderRadius,
+      headerRadius: headerRadius,
     );
 
     return SynchronizedDoubleSheet(

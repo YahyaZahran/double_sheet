@@ -22,22 +22,24 @@ class SheetHeader extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
-    
 
     return Positioned(
       left: 0,
       right: 0,
       top: position,
       child: SlideTransition(
-        position: animation != null 
-          ? Tween<Offset>(
-              begin: const Offset(0, -1),
-              end: Offset.zero,
-            ).animate(CurvedAnimation(
-              parent: animation!,
-              curve: Curves.easeOutCubic,
-            ))
-          : AlwaysStoppedAnimation(Offset.zero),
+        position:
+            animation != null
+                ? Tween<Offset>(
+                  begin: const Offset(0, -1),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: animation!,
+                    curve: Curves.easeOutCubic,
+                  ),
+                )
+                : AlwaysStoppedAnimation(Offset.zero),
         child: Container(
           padding: EdgeInsets.only(
             top: mediaQuery.padding.top,
@@ -47,6 +49,7 @@ class SheetHeader extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             color: config.headerBackgroundColor ?? theme.colorScheme.surface,
+            borderRadius: config.headerRadius,
             boxShadow: [
               BoxShadow(
                 color: Colors.black.withValues(alpha: 0.1),
@@ -60,15 +63,17 @@ class SheetHeader extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text(
-                    config.title,
-                    style:
-                        config.titleStyle ??
-                        theme.textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.w600,
-                        ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
+                  child:
+                      config.titleWidget ??
+                      Text(
+                        config.title,
+                        style:
+                            config.titleStyle ??
+                            theme.textTheme.titleLarge?.copyWith(
+                              fontWeight: FontWeight.w600,
+                            ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                 ),
                 const SizedBox(width: 8),
                 _CloseButton(onClose: onClose),
