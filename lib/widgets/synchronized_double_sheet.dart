@@ -9,12 +9,14 @@ class SynchronizedDoubleSheet extends StatefulWidget {
   final DoubleSheetConfig config;
   final Widget child;
   final VoidCallback? onClose;
+  final Animation<double>? animation;
 
   const SynchronizedDoubleSheet({
     super.key,
     required this.config,
     required this.child,
     this.onClose,
+    this.animation,
   });
 
   @override
@@ -55,11 +57,13 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
               position: _controller.headerPosition,
               opacity: _controller.headerOpacity,
               onClose: _controller.dismiss,
+              animation: widget.animation,
             ),
             SheetContent(
               config: widget.config,
               controller: _controller,
               screenHeight: screenHeight,
+              animation: widget.animation,
               child: widget.child,
             ),
           ],

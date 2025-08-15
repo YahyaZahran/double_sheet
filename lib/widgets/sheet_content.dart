@@ -9,6 +9,7 @@ class SheetContent extends StatelessWidget {
   final SheetGestureController controller;
   final double screenHeight;
   final Widget child;
+  final Animation<double>? animation;
 
   const SheetContent({
     super.key,
@@ -16,6 +17,7 @@ class SheetContent extends StatelessWidget {
     required this.controller,
     required this.screenHeight,
     required this.child,
+    this.animation,
   });
 
   @override
@@ -27,11 +29,21 @@ class SheetContent extends StatelessWidget {
       right: 0,
       bottom: 0,
       height: screenHeight * controller.sheetPosition,
-      child: GestureDetector(
-        onPanStart: controller.onPanStart,
-        onPanUpdate: (details) => controller.onPanUpdate(details, context),
-        onPanEnd: controller.onPanEnd,
-        child: Container(
+      child: SlideTransition(
+        position: animation != null 
+          ? Tween<Offset>(
+              begin: const Offset(0, 1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation!,
+              curve: Curves.easeOutCubic,
+            ))
+          : AlwaysStoppedAnimation(Offset.zero),
+        child: GestureDetector(
+          onPanStart: controller.onPanStart,
+          onPanUpdate: (details) => controller.onPanUpdate(details, context),
+          onPanEnd: controller.onPanEnd,
+          child: Container(
           decoration: BoxDecoration(
             color: config.backgroundColor ?? theme.colorScheme.surface,
             borderRadius: const BorderRadius.only(
@@ -52,6 +64,7 @@ class SheetContent extends StatelessWidget {
               Expanded(child: child),
             ],
           ),
+        ),
         ),
       ),
     );

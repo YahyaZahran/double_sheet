@@ -35,15 +35,18 @@ Future<T?> showDoubleSheet<T>({
     allowFullScreen: allowFullScreen,
   );
 
-  return showDialog<T>(
+  return showGeneralDialog<T>(
     context: context,
     barrierDismissible: isDismissible,
+    barrierLabel: isDismissible ? MaterialLocalizations.of(context).modalBarrierDismissLabel : null,
     barrierColor: Colors.black.withValues(alpha: 0.5),
-    builder: (dialogContext) {
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (dialogContext, animation, secondaryAnimation) {
       return PopScope(
         canPop: true,
         child: SynchronizedDoubleSheet(
           config: config,
+          animation: animation,
           onClose: () {
             if (Navigator.of(dialogContext).canPop()) {
               Navigator.of(dialogContext, rootNavigator: false).pop();
@@ -52,6 +55,9 @@ Future<T?> showDoubleSheet<T>({
           child: child,
         ),
       );
+    },
+    transitionBuilder: (context, animation, secondaryAnimation, child) {
+      return child;
     },
   );
 }

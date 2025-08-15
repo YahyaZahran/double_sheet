@@ -7,6 +7,7 @@ class SheetHeader extends StatelessWidget {
   final double position;
   final double opacity;
   final VoidCallback onClose;
+  final Animation<double>? animation;
 
   const SheetHeader({
     super.key,
@@ -14,19 +15,29 @@ class SheetHeader extends StatelessWidget {
     required this.position,
     required this.opacity,
     required this.onClose,
+    this.animation,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
+    
 
     return Positioned(
       left: 0,
       right: 0,
       top: position,
-      child: Opacity(
-        opacity: opacity,
+      child: SlideTransition(
+        position: animation != null 
+          ? Tween<Offset>(
+              begin: const Offset(0, -1),
+              end: Offset.zero,
+            ).animate(CurvedAnimation(
+              parent: animation!,
+              curve: Curves.easeOutCubic,
+            ))
+          : AlwaysStoppedAnimation(Offset.zero),
         child: Container(
           padding: EdgeInsets.only(
             top: mediaQuery.padding.top,
