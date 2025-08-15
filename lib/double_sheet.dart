@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-export 'models/double_sheet_config.dart';
-export 'widgets/synchronized_double_sheet.dart';
-
 import 'models/double_sheet_config.dart';
 import 'widgets/synchronized_double_sheet.dart';
+
+export 'models/double_sheet_config.dart';
+export 'widgets/synchronized_double_sheet.dart';
 
 Future<T?> showDoubleSheet<T>({
   required BuildContext context,
@@ -39,11 +39,18 @@ Future<T?> showDoubleSheet<T>({
     context: context,
     barrierDismissible: isDismissible,
     barrierColor: Colors.black.withValues(alpha: 0.5),
-    builder: (context) {
-      return SynchronizedDoubleSheet(
-        config: config,
-        onClose: () => Navigator.of(context).pop(),
-        child: child,
+    builder: (dialogContext) {
+      return PopScope(
+        canPop: true,
+        child: SynchronizedDoubleSheet(
+          config: config,
+          onClose: () {
+            if (Navigator.of(dialogContext).canPop()) {
+              Navigator.of(dialogContext, rootNavigator: false).pop();
+            }
+          },
+          child: child,
+        ),
       );
     },
   );

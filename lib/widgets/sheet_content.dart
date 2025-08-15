@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import '../models/double_sheet_config.dart';
+
 import '../controllers/sheet_gesture_controller.dart';
+import '../models/double_sheet_config.dart';
 import 'drag_handle.dart';
 
 class SheetContent extends StatelessWidget {

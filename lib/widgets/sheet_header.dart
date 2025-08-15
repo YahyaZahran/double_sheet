@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+
 import '../models/double_sheet_config.dart';
 
 class SheetHeader extends StatelessWidget {
@@ -50,7 +51,8 @@ class SheetHeader extends StatelessWidget {
                 Expanded(
                   child: Text(
                     config.title,
-                    style: config.titleStyle ??
+                    style:
+                        config.titleStyle ??
                         theme.textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.w600,
                         ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import '../models/double_sheet_config.dart';
+
 import '../controllers/sheet_gesture_controller.dart';
-import 'sheet_header.dart';
+import '../models/double_sheet_config.dart';
 import 'sheet_content.dart';
+import 'sheet_header.dart';
 
 class SynchronizedDoubleSheet extends StatefulWidget {
   final DoubleSheetConfig config;
@@ -17,7 +18,8 @@ class SynchronizedDoubleSheet extends StatefulWidget {
   });
 
   @override
-  State<SynchronizedDoubleSheet> createState() => _SynchronizedDoubleSheetState();
+  State<SynchronizedDoubleSheet> createState() =>
+      _SynchronizedDoubleSheetState();
 }
 
 class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
