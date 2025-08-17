@@ -11,6 +11,7 @@ Future<T?> showDoubleSheet<T>({
   required String title,
   required Widget child,
   Widget? titleWidget,
+  Widget? customHeaderWidget,
   double initialChildSize = 0.4,
   double minChildSize = 0.25,
   double maxChildSize = 0.9,
@@ -28,6 +29,7 @@ Future<T?> showDoubleSheet<T>({
   final config = DoubleSheetConfig(
     title: title,
     titleWidget: titleWidget,
+    customHeaderWidget: customHeaderWidget,
     initialChildSize: initialChildSize,
     minChildSize: minChildSize,
     maxChildSize: maxChildSize,
@@ -80,6 +82,7 @@ Future<T?> showDoubleSheet<T>({
 class DoubleSheet extends StatelessWidget {
   final String title;
   final Widget? titleWidget;
+  final Widget? customHeaderWidget;
   final double initialChildSize;
   final double minChildSize;
   final double maxChildSize;
@@ -99,6 +102,7 @@ class DoubleSheet extends StatelessWidget {
     super.key,
     required this.title,
     this.titleWidget,
+    this.customHeaderWidget,
     this.initialChildSize = 0.4,
     this.minChildSize = 0.25,
     this.maxChildSize = 0.9,
@@ -120,6 +124,7 @@ class DoubleSheet extends StatelessWidget {
     final config = DoubleSheetConfig(
       title: title,
       titleWidget: titleWidget,
+      customHeaderWidget: customHeaderWidget,
       initialChildSize: initialChildSize,
       minChildSize: minChildSize,
       maxChildSize: maxChildSize,

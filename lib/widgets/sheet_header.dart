@@ -23,6 +23,29 @@ class SheetHeader extends StatelessWidget {
     final theme = Theme.of(context);
     final mediaQuery = MediaQuery.of(context);
 
+    if (config.customHeaderWidget != null) {
+      return Positioned(
+        left: 0,
+        right: 0,
+        top: position,
+        child: SlideTransition(
+          position:
+              animation != null
+                  ? Tween<Offset>(
+                    begin: const Offset(0, -1),
+                    end: Offset.zero,
+                  ).animate(
+                    CurvedAnimation(
+                      parent: animation!,
+                      curve: Curves.easeOutCubic,
+                    ),
+                  )
+                  : AlwaysStoppedAnimation(Offset.zero),
+          child: config.customHeaderWidget!,
+        ),
+      );
+    }
+
     return Positioned(
       left: 0,
       right: 0,

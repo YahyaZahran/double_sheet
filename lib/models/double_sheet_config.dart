@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class DoubleSheetConfig {
   final String title;
   final Widget? titleWidget;
+  final Widget? customHeaderWidget;
   final double initialChildSize;
   final double minChildSize;
   final double maxChildSize;
@@ -20,6 +21,7 @@ class DoubleSheetConfig {
   const DoubleSheetConfig({
     required this.title,
     this.titleWidget,
+    this.customHeaderWidget,
     this.initialChildSize = 0.4,
     this.minChildSize = 0.25,
     this.maxChildSize = 0.9,
@@ -38,6 +40,7 @@ class DoubleSheetConfig {
   DoubleSheetConfig copyWith({
     String? title,
     Widget? titleWidget,
+    Widget? customHeaderWidget,
     double? initialChildSize,
     double? minChildSize,
     double? maxChildSize,
@@ -55,6 +58,7 @@ class DoubleSheetConfig {
     return DoubleSheetConfig(
       title: title ?? this.title,
       titleWidget: titleWidget ?? this.titleWidget,
+      customHeaderWidget: customHeaderWidget ?? this.customHeaderWidget,
       initialChildSize: initialChildSize ?? this.initialChildSize,
       minChildSize: minChildSize ?? this.minChildSize,
       maxChildSize: maxChildSize ?? this.maxChildSize,
