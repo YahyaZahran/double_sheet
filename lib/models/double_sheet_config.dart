@@ -15,6 +15,7 @@ class DoubleSheetConfig {
   final bool allowFullScreen;
   final BorderRadius? borderRadius;
   final BorderRadius? headerRadius;
+  final bool enableSynchronizedScrolling;
 
   const DoubleSheetConfig({
     required this.title,
@@ -31,6 +32,7 @@ class DoubleSheetConfig {
     this.allowFullScreen = false,
     this.borderRadius,
     this.headerRadius,
+    this.enableSynchronizedScrolling = false,
   });
 
   DoubleSheetConfig copyWith({
@@ -48,6 +50,7 @@ class DoubleSheetConfig {
     bool? allowFullScreen,
     BorderRadius? borderRadius,
     BorderRadius? headerRadius,
+    bool? enableSynchronizedScrolling,
   }) {
     return DoubleSheetConfig(
       title: title ?? this.title,
@@ -65,6 +68,8 @@ class DoubleSheetConfig {
       allowFullScreen: allowFullScreen ?? this.allowFullScreen,
       borderRadius: borderRadius ?? this.borderRadius,
       headerRadius: headerRadius ?? this.headerRadius,
+      enableSynchronizedScrolling:
+          enableSynchronizedScrolling ?? this.enableSynchronizedScrolling,
     );
   }
 

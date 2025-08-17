@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../controllers/sheet_gesture_controller.dart';
+import '../controllers/synchronized_scroll_controller.dart';
 import '../models/double_sheet_config.dart';
 import 'sheet_content.dart';
 import 'sheet_header.dart';
@@ -26,6 +27,7 @@ class SynchronizedDoubleSheet extends StatefulWidget {
 
 class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
   late SheetGestureController _controller;
+  SynchronizedScrollController? _synchronizedController;
 
   @override
   void initState() {
@@ -34,10 +36,20 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
       config: widget.config,
       onClose: widget.onClose,
     );
+
+    if (widget.config.enableSynchronizedScrolling) {
+      _synchronizedController = SynchronizedScrollController(
+        config: widget.config,
+        sheetController: _controller,
+        onClose: widget.onClose,
+        enableSynchronization: true,
+      );
+    }
   }
 
   @override
   void dispose() {
+    _synchronizedController?.dispose();
     _controller.dispose();
     super.dispose();
   }
@@ -50,11 +62,12 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
     final theme = Theme.of(context);
 
     return Theme(
-      data: theme.copyWith(
-        materialTapTargetSize: MaterialTapTargetSize.padded,
-      ),
+      data: theme.copyWith(materialTapTargetSize: MaterialTapTargetSize.padded),
       child: ListenableBuilder(
-        listenable: _controller,
+        listenable:
+            _synchronizedController != null
+                ? Listenable.merge([_controller, _synchronizedController!])
+                : _controller,
         builder: (context, _) {
           return Padding(
             padding: EdgeInsets.only(bottom: keyboardHeight),
@@ -70,6 +83,7 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
                 SheetContent(
                   config: widget.config,
                   controller: _controller,
+                  synchronizedController: _synchronizedController,
                   screenHeight: screenHeight - keyboardHeight,
                   animation: widget.animation,
                   child: widget.child,

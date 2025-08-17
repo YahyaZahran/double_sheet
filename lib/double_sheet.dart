@@ -23,6 +23,7 @@ Future<T?> showDoubleSheet<T>({
   bool allowFullScreen = false,
   BorderRadius? borderRadius,
   BorderRadius? headerRadius,
+  bool enableSynchronizedScrolling = false,
 }) {
   final config = DoubleSheetConfig(
     title: title,
@@ -39,6 +40,7 @@ Future<T?> showDoubleSheet<T>({
     allowFullScreen: allowFullScreen,
     borderRadius: borderRadius,
     headerRadius: headerRadius,
+    enableSynchronizedScrolling: enableSynchronizedScrolling,
   );
 
   return showGeneralDialog<T>(
@@ -89,6 +91,7 @@ class DoubleSheet extends StatelessWidget {
   final bool allowFullScreen;
   final BorderRadius? borderRadius;
   final BorderRadius? headerRadius;
+  final bool enableSynchronizedScrolling;
   final VoidCallback? onClose;
   final Widget child;
 
@@ -107,6 +110,7 @@ class DoubleSheet extends StatelessWidget {
     this.allowFullScreen = false,
     this.borderRadius,
     this.headerRadius,
+    this.enableSynchronizedScrolling = false,
     this.onClose,
     required this.child,
   });
@@ -127,6 +131,7 @@ class DoubleSheet extends StatelessWidget {
       allowFullScreen: allowFullScreen,
       borderRadius: borderRadius,
       headerRadius: headerRadius,
+      enableSynchronizedScrolling: enableSynchronizedScrolling,
     );
 
     return SynchronizedDoubleSheet(

@@ -55,7 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
   void _showTextFieldsSheet() {
     showDoubleSheet(
       context: context,
-      title: "Form with 20 Fields",
+      title: "Form with 20 Fields (Synchronized Scrolling)",
       headerRadius: const BorderRadius.only(
         bottomLeft: Radius.circular(24),
         bottomRight: Radius.circular(24),
@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
       initialChildSize: 0.7,
       maxChildSize: 0.95,
       minChildSize: 0.6,
+      enableSynchronizedScrolling: true,
       child: const Padding(
         padding: EdgeInsets.all(24.0),
         child: _TextFieldsSheetContent(),
@@ -371,7 +372,8 @@ class _TextFieldsSheetContent extends StatefulWidget {
   const _TextFieldsSheetContent();
 
   @override
-  State<_TextFieldsSheetContent> createState() => _TextFieldsSheetContentState();
+  State<_TextFieldsSheetContent> createState() =>
+      _TextFieldsSheetContentState();
 }
 
 class _TextFieldsSheetContentState extends State<_TextFieldsSheetContent> {
@@ -404,10 +406,7 @@ class _TextFieldsSheetContentState extends State<_TextFieldsSheetContent> {
         const SizedBox(height: 8),
         const Text(
           "Fill out all 20 fields below",
-          style: TextStyle(
-            fontSize: 16,
-            color: Colors.black54,
-          ),
+          style: TextStyle(fontSize: 16, color: Colors.black54),
         ),
         const SizedBox(height: 24),
         Expanded(
@@ -444,9 +443,9 @@ class _TextFieldsSheetContentState extends State<_TextFieldsSheetContent> {
           child: ElevatedButton(
             onPressed: () {
               Navigator.pop(context);
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text("Form submitted!")),
-              );
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text("Form submitted!")));
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF6366F1),
