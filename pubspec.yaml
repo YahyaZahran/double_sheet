@@ -1,6 +1,6 @@
 name: double_sheet
 description: A Flutter package that provides a highly customizable bottom sheet with a synchronized header that moves smoothly as the sheet expands and contracts.
-version: 0.0.1
+version: 0.0.2
 repository: https://github.com/YahyaZahran/double_sheet
 
 environment:
