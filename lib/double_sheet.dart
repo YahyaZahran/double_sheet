@@ -53,15 +53,19 @@ Future<T?> showDoubleSheet<T>({
     pageBuilder: (dialogContext, animation, secondaryAnimation) {
       return PopScope(
         canPop: true,
-        child: SynchronizedDoubleSheet(
-          config: config,
-          animation: animation,
-          onClose: () {
-            if (Navigator.of(dialogContext).canPop()) {
-              Navigator.of(dialogContext, rootNavigator: false).pop();
-            }
-          },
-          child: child,
+        child: MediaQuery.removeViewInsets(
+          context: dialogContext,
+          removeTop: true,
+          child: SynchronizedDoubleSheet(
+            config: config,
+            animation: animation,
+            onClose: () {
+              if (Navigator.of(dialogContext).canPop()) {
+                Navigator.of(dialogContext, rootNavigator: false).pop();
+              }
+            },
+            child: child,
+          ),
         ),
       );
     },

@@ -46,6 +46,7 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenHeight = mediaQuery.size.height;
+    final keyboardHeight = mediaQuery.viewInsets.bottom;
     final theme = Theme.of(context);
 
     return Theme(
@@ -55,23 +56,26 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
       child: ListenableBuilder(
         listenable: _controller,
         builder: (context, _) {
-          return Stack(
-            children: [
-              SheetHeader(
-                config: widget.config,
-                position: _controller.headerPosition,
-                opacity: _controller.headerOpacity,
-                onClose: _controller.dismiss,
-                animation: widget.animation,
-              ),
-              SheetContent(
-                config: widget.config,
-                controller: _controller,
-                screenHeight: screenHeight,
-                animation: widget.animation,
-                child: widget.child,
-              ),
-            ],
+          return Padding(
+            padding: EdgeInsets.only(bottom: keyboardHeight),
+            child: Stack(
+              children: [
+                SheetHeader(
+                  config: widget.config,
+                  position: _controller.headerPosition,
+                  opacity: _controller.headerOpacity,
+                  onClose: _controller.dismiss,
+                  animation: widget.animation,
+                ),
+                SheetContent(
+                  config: widget.config,
+                  controller: _controller,
+                  screenHeight: screenHeight - keyboardHeight,
+                  animation: widget.animation,
+                  child: widget.child,
+                ),
+              ],
+            ),
           );
         },
       ),

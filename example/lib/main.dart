@@ -52,6 +52,28 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _showTextFieldsSheet() {
+    showDoubleSheet(
+      context: context,
+      title: "Form with 20 Fields",
+      headerRadius: const BorderRadius.only(
+        bottomLeft: Radius.circular(24),
+        bottomRight: Radius.circular(24),
+      ),
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
+      ),
+      initialChildSize: 0.7,
+      maxChildSize: 0.95,
+      minChildSize: 0.6,
+      child: const Padding(
+        padding: EdgeInsets.all(24.0),
+        child: _TextFieldsSheetContent(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +102,25 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   child: const Text(
                     'Tap to freeze card',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 12),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: _showTextFieldsSheet,
+                  style: OutlinedButton.styleFrom(
+                    foregroundColor: const Color(0xFF6366F1),
+                    side: const BorderSide(color: Color(0xFF6366F1)),
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                  ),
+                  child: const Text(
+                    'Show 20 Text Fields',
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
                   ),
                 ),
@@ -322,6 +363,106 @@ class _BottomNavigationIcons extends StatelessWidget {
         color: isActive ? Colors.white : Colors.grey.shade600,
         size: 24,
       ),
+    );
+  }
+}
+
+class _TextFieldsSheetContent extends StatefulWidget {
+  const _TextFieldsSheetContent();
+
+  @override
+  State<_TextFieldsSheetContent> createState() => _TextFieldsSheetContentState();
+}
+
+class _TextFieldsSheetContentState extends State<_TextFieldsSheetContent> {
+  final List<TextEditingController> _controllers = List.generate(
+    20,
+    (index) => TextEditingController(),
+  );
+
+  @override
+  void dispose() {
+    for (final controller in _controllers) {
+      controller.dispose();
+    }
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Form Example",
+          style: TextStyle(
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 8),
+        const Text(
+          "Fill out all 20 fields below",
+          style: TextStyle(
+            fontSize: 16,
+            color: Colors.black54,
+          ),
+        ),
+        const SizedBox(height: 24),
+        Expanded(
+          child: ListView.builder(
+            itemCount: 20,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.only(bottom: 16),
+                child: TextField(
+                  controller: _controllers[index],
+                  decoration: InputDecoration(
+                    labelText: 'Field ${index + 1}',
+                    hintText: 'Enter value for field ${index + 1}',
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(12),
+                      borderSide: const BorderSide(color: Color(0xFF6366F1)),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+        const SizedBox(height: 16),
+        SizedBox(
+          width: double.infinity,
+          child: ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              ScaffoldMessenger.of(context).showSnackBar(
+                const SnackBar(content: Text("Form submitted!")),
+              );
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF6366F1),
+              foregroundColor: Colors.white,
+              padding: const EdgeInsets.symmetric(vertical: 16),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+            ),
+            child: const Text(
+              "Submit",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
