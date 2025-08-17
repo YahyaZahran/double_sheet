@@ -40,44 +40,39 @@ class SheetHeader extends StatelessWidget {
                   ),
                 )
                 : AlwaysStoppedAnimation(Offset.zero),
-        child: Container(
-          padding: EdgeInsets.only(
-            top: mediaQuery.padding.top,
-            left: 16,
-            right: 16,
-            bottom: 8,
-          ),
-          decoration: BoxDecoration(
-            color: config.headerBackgroundColor ?? theme.colorScheme.surface,
-            borderRadius: config.headerRadius,
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withValues(alpha: 0.1),
-                blurRadius: 8,
-                offset: const Offset(0, 2),
+        child: Material(
+          color: config.headerBackgroundColor ?? theme.colorScheme.surface,
+          type: MaterialType.card,
+          elevation: 2,
+          borderRadius: config.headerRadius,
+          child: Container(
+            padding: EdgeInsets.only(
+              top: mediaQuery.padding.top,
+              left: 16,
+              right: 16,
+              bottom: 8,
+            ),
+            child: SizedBox(
+              height: 60,
+              child: Row(
+                children: [
+                  Expanded(
+                    child:
+                        config.titleWidget ??
+                        Text(
+                          config.title,
+                          style:
+                              config.titleStyle ??
+                              theme.textTheme.titleLarge?.copyWith(
+                                fontWeight: FontWeight.w600,
+                              ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                  ),
+                  const SizedBox(width: 8),
+                  _CloseButton(onClose: onClose),
+                ],
               ),
-            ],
-          ),
-          child: SizedBox(
-            height: 60,
-            child: Row(
-              children: [
-                Expanded(
-                  child:
-                      config.titleWidget ??
-                      Text(
-                        config.title,
-                        style:
-                            config.titleStyle ??
-                            theme.textTheme.titleLarge?.copyWith(
-                              fontWeight: FontWeight.w600,
-                            ),
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                ),
-                const SizedBox(width: 8),
-                _CloseButton(onClose: onClose),
-              ],
             ),
           ),
         ),

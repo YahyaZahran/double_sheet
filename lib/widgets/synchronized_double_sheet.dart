@@ -46,29 +46,35 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     final screenHeight = mediaQuery.size.height;
+    final theme = Theme.of(context);
 
-    return ListenableBuilder(
-      listenable: _controller,
-      builder: (context, _) {
-        return Stack(
-          children: [
-            SheetHeader(
-              config: widget.config,
-              position: _controller.headerPosition,
-              opacity: _controller.headerOpacity,
-              onClose: _controller.dismiss,
-              animation: widget.animation,
-            ),
-            SheetContent(
-              config: widget.config,
-              controller: _controller,
-              screenHeight: screenHeight,
-              animation: widget.animation,
-              child: widget.child,
-            ),
-          ],
-        );
-      },
+    return Theme(
+      data: theme.copyWith(
+        materialTapTargetSize: MaterialTapTargetSize.padded,
+      ),
+      child: ListenableBuilder(
+        listenable: _controller,
+        builder: (context, _) {
+          return Stack(
+            children: [
+              SheetHeader(
+                config: widget.config,
+                position: _controller.headerPosition,
+                opacity: _controller.headerOpacity,
+                onClose: _controller.dismiss,
+                animation: widget.animation,
+              ),
+              SheetContent(
+                config: widget.config,
+                controller: _controller,
+                screenHeight: screenHeight,
+                animation: widget.animation,
+                child: widget.child,
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

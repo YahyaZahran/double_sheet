@@ -51,19 +51,26 @@ class SheetGestureController extends ChangeNotifier {
     final screenHeight = MediaQuery.of(context).size.height;
     final sheetDelta = -deltaY / screenHeight;
     
-    _sheetPosition = (_dragStartPosition + sheetDelta).clamp(0.0, config.effectiveMaxChildSize);
-    
+    final newSheetPosition = (_dragStartPosition + sheetDelta).clamp(0.0, config.effectiveMaxChildSize);
     final headerDelta = -deltaY * _headerMovementMultiplier;
-    _headerPosition = (0.0 + headerDelta).clamp(-_headerRange, 0.0);
+    final newHeaderPosition = (0.0 + headerDelta).clamp(-_headerRange, 0.0);
+    final newHeaderOpacity = (1.0 + newHeaderPosition / _headerRange).clamp(0.0, 1.0);
     
-    _headerOpacity = (1.0 + _headerPosition / _headerRange).clamp(0.0, 1.0);
-    
-    if (_sheetPosition < config.minChildSize * 0.5) {
+    if (newSheetPosition < config.minChildSize * 0.5) {
       dismiss();
       return;
     }
     
-    notifyListeners();
+    final hasChanged = (_sheetPosition - newSheetPosition).abs() > 0.001 ||
+                      (_headerPosition - newHeaderPosition).abs() > 0.001 ||
+                      (_headerOpacity - newHeaderOpacity).abs() > 0.001;
+    
+    if (hasChanged) {
+      _sheetPosition = newSheetPosition;
+      _headerPosition = newHeaderPosition;
+      _headerOpacity = newHeaderOpacity;
+      notifyListeners();
+    }
   }
 
   void _snapToClosestPosition() {
