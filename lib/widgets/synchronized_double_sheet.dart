@@ -73,13 +73,6 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
             padding: EdgeInsets.only(bottom: keyboardHeight),
             child: Stack(
               children: [
-                SheetHeader(
-                  config: widget.config,
-                  position: _controller.headerPosition,
-                  opacity: _controller.headerOpacity,
-                  onClose: _controller.dismiss,
-                  animation: widget.animation,
-                ),
                 SheetContent(
                   config: widget.config,
                   controller: _controller,
@@ -87,6 +80,13 @@ class _SynchronizedDoubleSheetState extends State<SynchronizedDoubleSheet> {
                   screenHeight: screenHeight - keyboardHeight,
                   animation: widget.animation,
                   child: widget.child,
+                ),
+                SheetHeader(
+                  config: widget.config,
+                  position: _controller.headerPosition,
+                  opacity: _controller.headerOpacity,
+                  onClose: _controller.dismiss,
+                  animation: widget.animation,
                 ),
               ],
             ),

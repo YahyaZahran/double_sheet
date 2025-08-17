@@ -61,6 +61,7 @@ class SheetHeader extends StatelessWidget {
                         config.titleWidget ??
                         Text(
                           config.title,
+                          textAlign: TextAlign.center,
                           style:
                               config.titleStyle ??
                               theme.textTheme.titleLarge?.copyWith(
@@ -99,13 +100,13 @@ class _CloseButton extends StatelessWidget {
           width: 32,
           height: 32,
           decoration: BoxDecoration(
-            color: theme.colorScheme.outline.withValues(alpha: 0.1),
-            borderRadius: BorderRadius.circular(16),
+            color: theme.colorScheme.primary,
+            borderRadius: BorderRadius.circular(8),
           ),
           child: Icon(
             Icons.close,
             size: 18,
-            color: theme.colorScheme.onSurface,
+            color: theme.colorScheme.onPrimary,
           ),
         ),
       ),
